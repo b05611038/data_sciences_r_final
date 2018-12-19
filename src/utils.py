@@ -1,5 +1,7 @@
 import pickle
 import datetime
+import calendar
+import gzip
 #--------------------------------------------------------------------------------
 #the class and function are the basic function for running the application
 #--------------------------------------------------------------------------------
@@ -28,3 +30,14 @@ def get_time(mode):
         return [int(i) for i in date]
     elif mode == 'second':
         return [int(i) for i in sum([date, times], [])]
+
+def get_month_days(year, month):
+    return calendar.monthrange(year, month)[1]
+
+def read_gz(file_path):
+    with gzip.open(file_path, 'rb') as f:
+        file_content = f.read()
+
+    f.close()
+    file_content = file_content.decode('utf-8')
+    return file_content
