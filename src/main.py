@@ -1,6 +1,8 @@
 from crawl.grabhistory import GrabHistory
 from crawl.grabnow import GrabNow
 
+from dataprocessing.info import RLInfo
+
 if __name__ == '__main__':
-    grab = GrabNow()
-    grab.update()
+    test = RLInfo()
+    test.build()

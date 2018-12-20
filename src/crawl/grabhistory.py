@@ -4,6 +4,7 @@ import wget
 import datetime
 
 from utils import *
+from crawl.utils import *
 #--------------------------------------------------------------------------------
 #the grabhistory.py is the setup file for new application model training
 #--------------------------------------------------------------------------------
