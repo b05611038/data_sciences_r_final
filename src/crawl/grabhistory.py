@@ -25,6 +25,9 @@ class GrabHistory():
         if not os.path.exists(self.path):
             os.makedirs(self.path)
 
+        if not os.path.exists(self.save_dir):
+            os.makedirs(self.save_dir)
+
     def grab(self):
         now = get_time('day')
         datatype = ['/vd', '/roadlevel']
