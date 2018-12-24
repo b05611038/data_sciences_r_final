@@ -6,3 +6,6 @@ from dataprocessing.info import RLInfo
 if __name__ == '__main__':
     test = RLInfo()
     test.build()
+    test.printTitle()
+    hhh = test.grabTitle()
+    print(hhh)

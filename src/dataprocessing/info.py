@@ -13,6 +13,8 @@ class RLInfo():
         #grab the file from the data
         self.files = files
         self.save_dir = save_dir
+        self.title = ['routeid', 'sourceid', 'locationpath', 'startlocationpoint', 'endlocationpoint', 'roadsection', 'roadtype', 'fromkm', 'tokm', 'speedlimit']
+        self.info = []
 
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
@@ -24,6 +26,71 @@ class RLInfo():
     def build(self):
         data = read_gz(self.files)
         data = data.split('\n')
-        print(len(data))
+        for i in range(3, len(data) - 3):
+            self.info.append(self.lineInfo(data[i]))
 
-#class VDInfo():
+    def grab(self):
+        if len(self.info) == 0:
+            print('Please initial the info list by RLInfo.build()')
+            return None
+        else:
+            return self.info
+
+    def grabTitle(self):
+        return self.title
+
+    def printTitle(self):
+        print('routeid, sourceid, locationpath, startlocationpoint, endlocationpoint, roadsection, roadtype, fromkm, tokm, speedlimit')
+
+    def lineInfo(self, inString):
+        #return list[routeid, sourceid, locationpath, startlocationpoint, endlocationpoint, roadsection, roadtype, fromkm, tokm, speedlimit]
+        info = []
+        inString = inString.split('"')
+        for i in range(1, 20, 2):
+            info.append(inString[i])
+
+        return info
+        
+class VDInfo():
+    def __init__(self, files = './data/vd_info.xml.gz', save_dir = './object'):
+        #the class is going to build the info and dict of each roud interval of roadlevel info
+        #grab the file from the data
+        self.files = files
+        self.save_dir = save_dir
+        self.info = []
+        self.title = ['vdid', 'routeid', 'roadsection', 'locationpath', 'startlocationpoint', 'endlocationpoint', 'roadway', 'vsrnum', 'vdtype', 'locationtype', 'px', 'py']
+
+        if not os.path.exists(self.save_dir):
+            os.makedirs(self.save_dir)
+
+        #to download the info file from the internet
+        if not os.path.isfile(self.files):
+            wget.download('http://tisvcloud.freeway.gov.tw/vd_info.xml.gz')
+
+    def build(self):
+        data = read_gz(self.files)
+        data = data.split('\n')
+        for i in range(3, len(data) - 3):
+            self.info.append(self.lineInfo(data[i]))
+
+    def grab(self):
+        if len(self.info) == 0:
+            print('Please initial the info list by RLInfo.build()')
+            return None
+        else:
+            return self.info
+
+    def grabTitle(self):
+        return self.title
+
+    def printTitle(self):
+        print('vdid, routeid, roadsection, locationpath, startlocationpoint, endlocationpoint, roadway, vsrnum, vdtype, locationtype, px, py')
+
+    def lineInfo(self, inString):
+        #return list[vdid, routeid, roadsection, locationpath, startlocationpoint, endlocationpoint, roadway, vsrnum, vdtype, locationtype, px, py]
+        info = []
+        inString = inString.split('"')
+        for i in range(1, 24, 2):
+            info.append(inString[i])
+
+        return info
