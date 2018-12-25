@@ -1,11 +1,9 @@
 from crawl.grabhistory import GrabHistory
 from crawl.grabnow import GrabNow
 
-from dataprocessing.info import RLInfo
+from dataprocessing.roadlevel import RLone
 
 if __name__ == '__main__':
-    test = RLInfo()
-    test.build()
-    test.printTitle()
-    hhh = test.grabTitle()
-    print(hhh)
+    test = RLone('../../Downloads/roadlevel_value5_0100.xml.gz')
+    data = test.grab()
+    print(data[2])

@@ -8,16 +8,12 @@ from dataprocessing.utils import *
 #build the database for road dictionaray
 #--------------------------------------------------------------------------------
 class RLInfo():
-    def __init__(self, files = './data/roadlevel_info.xml.gz', save_dir = './object'):
+    def __init__(self, files = './data/roadlevel_info.xml.gz'):
         #the class is going to build the info and dict of each roud interval of roadlevel info
         #grab the file from the data
         self.files = files
-        self.save_dir = save_dir
         self.title = ['routeid', 'sourceid', 'locationpath', 'startlocationpoint', 'endlocationpoint', 'roadsection', 'roadtype', 'fromkm', 'tokm', 'speedlimit']
         self.info = []
-
-        if not os.path.exists(self.save_dir):
-            os.makedirs(self.save_dir)
 
         #to download the info file from the internet
         if not os.path.isfile(self.files):
@@ -52,16 +48,13 @@ class RLInfo():
         return info
         
 class VDInfo():
-    def __init__(self, files = './data/vd_info.xml.gz', save_dir = './object'):
+    def __init__(self, files = './data/vd_info.xml.gz'):
         #the class is going to build the info and dict of each roud interval of roadlevel info
         #grab the file from the data
         self.files = files
         self.save_dir = save_dir
         self.info = []
         self.title = ['vdid', 'routeid', 'roadsection', 'locationpath', 'startlocationpoint', 'endlocationpoint', 'roadway', 'vsrnum', 'vdtype', 'locationtype', 'px', 'py']
-
-        if not os.path.exists(self.save_dir):
-            os.makedirs(self.save_dir)
 
         #to download the info file from the internet
         if not os.path.isfile(self.files):
