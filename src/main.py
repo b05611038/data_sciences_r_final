@@ -1,9 +1,10 @@
 from crawl.grabhistory import GrabHistory
 from crawl.grabnow import GrabNow
 
-from dataprocessing.roadlevel import RLone
+from dataprocessing.vehicledetector import VDdata
 
 if __name__ == '__main__':
-    test = RLone('../../Downloads/roadlevel_value5_0100.xml.gz')
+    test = VDdata('../../Downloads/vd_value_1828.xml.gz')
+    test.printTitle()
     data = test.grab()
-    print(data[2])
+    print(len(data))

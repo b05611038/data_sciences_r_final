@@ -6,7 +6,7 @@ from dataprocessing.utils import *
 #the roadlevel.py is the class which grab the data from the roadlevel.xml
 #include one minutes and five minutes
 #--------------------------------------------------------------------------------
-class RLone():
+class RLdata():
     def __init__(self, file_path, mode = 'remove'):
         self.file_path = file_path
         #the path of the roadlevel info
@@ -28,7 +28,6 @@ class RLone():
     def build(self):
         text = read_gz(self.file_path)
         text = text.split('\n')
-        print(text[len(text) - 2])
         for i in range(3, len(text) - 3):
             self.data.append(self.lineInfo(text[i]))
 
