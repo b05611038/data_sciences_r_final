@@ -51,6 +51,8 @@ class VDdata():
         for i in range(1, 6, 2):
             info.append(vdtitle[i])
 
+        info[1] = int(info[1])
+
         for i in range(1, len(inString), 3):
              sub_info = []
              sub_text_one = inString[i]
@@ -63,6 +65,9 @@ class VDdata():
              sub_text_two = sub_text_two.split('"')
              for j in range(1, 14, 4):
                  sub_info.append(sub_text_two[j])
+
+             for j in range(len(sub_info)):
+                 sub_info[i] = int(sub_info[i])
 
              info.append(sub_info)
 

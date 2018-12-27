@@ -49,4 +49,8 @@ class RLdata():
         for i in range(1, 10, 2):
             info.append(inString[i])
 
+        info[1] = int(info[1])
+        info[2] = int(info[2])
+        info[3] = int(info[3])
+
         return info
