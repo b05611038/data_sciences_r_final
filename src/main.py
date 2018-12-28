@@ -3,21 +3,19 @@ from crawl.grabnow import GrabNow
 
 from dataprocessing.vehicledetector import VDdata
 from dataprocessing.roadlevel import RLdata
+from dataprocessing.save import RLStore, VDStore
 
 from utils import *
 
 if __name__ == '__main__':
     data = []
-    test = RLdata('./data/roadlevel_value_2117.xml.gz', mode = 'no')
+    test = VDdata('./data/vd_value_0928.xml.gz', mode = 'no')
     data.append(test.grab())
-    test = RLdata('./data/roadlevel_value_2118.xml.gz', mode = 'no')
+    test = VDdata('./data/vd_value_2352.xml.gz', mode = 'no')
     data.append(test.grab())
-    test = RLdata('./data/roadlevel_value_2119.xml.gz', mode = 'no')
+    test = VDdata('./data/vd_value_2353.xml.gz', mode = 'no')
     data.append(test.grab())
-    test = RLdata('./data/roadlevel_value_2120.xml.gz', mode = 'no')
+    test = VDdata('./data/vd_value_2354.xml.gz', mode = 'no')
     data.append(test.grab())
-    test.printTitle()
-    print(data[0][0])
-    print(data[1][0])
-    print(data[2][0])
-    print(data[3][0])
+
+    action = VDStore(data, './csv')

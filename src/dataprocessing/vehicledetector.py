@@ -67,7 +67,7 @@ class VDdata():
                  sub_info.append(sub_text_two[j])
 
              for j in range(len(sub_info)):
-                 sub_info[i] = int(sub_info[i])
+                 sub_info[j] = int(sub_info[j])
 
              info.append(sub_info)
 
