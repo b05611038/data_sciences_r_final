@@ -29,7 +29,7 @@ class RLStore():
             for j in range(len(all_info)):
                 try:
                     lines.append(str(all_info[j][i][4]) + ',' + str(all_info[j][i][1]) + ',' + str(all_info[j][i][2]) + ',' + str(all_info[j][i][3]) + '\n')
-                except IndexError:
+                except:
                     continue
 
             self.writeFile(lines, filename_list[i])
@@ -83,7 +83,7 @@ class VDStore():
                             lines_temp += ','
 
                     lines.append(lines_temp)
-                except IndexError:
+                except:
                     continue
 
             self.writeFile(lines, filename_list[i])

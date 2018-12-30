@@ -73,7 +73,7 @@ class GrabHistory():
                                     elif i == 1:
                                         grabber = RLdata('./temp.xml.gz')
 
-                                except OSError:
+                                except:
                                     os.remove('./temp.xml.gz')
                                     continue                                
 
@@ -92,7 +92,7 @@ class GrabHistory():
                                     elif i == 1:
                                         grabber = RLdata('./temp.xml.gz')
 
-                                except OSError:
+                                except:
                                     os.remove('./temp.xml.gz')
                                     continue
 
