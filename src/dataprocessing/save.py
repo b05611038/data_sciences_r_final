@@ -23,13 +23,14 @@ class RLStore():
         self.file_name = self.grabID(self.data)
         self.save(self.data, self.file_name)
 
-        print('All progress done')
-
     def save(self, all_info, filename_list):
         for i in range(len(all_info[0])):
             lines = ['datacollecttime,level,value,traveltime\n']
             for j in range(len(all_info)):
-                lines.append(str(all_info[j][i][4]) + ',' + str(all_info[j][i][1]) + ',' + str(all_info[j][i][2]) + ',' + str(all_info[j][i][3]) + '\n')
+                try:
+                    lines.append(str(all_info[j][i][4]) + ',' + str(all_info[j][i][1]) + ',' + str(all_info[j][i][2]) + ',' + str(all_info[j][i][3]) + '\n')
+                except IndexError:
+                    continue
 
             self.writeFile(lines, filename_list[i])
 
@@ -70,17 +71,20 @@ class VDStore():
         for i in range(len(all_info[0])):
             lines = ['datacollecttime,status,vsrdir,vsrid,speed,laneoccupy,carS volume,carT volume,carL volume,...\n']
             for j in range(len(all_info)):
-                lines_temp = ''
-                lines_temp = all_info[j][i][2] + str(all_info[j][i][1])
-                for k in range(3, len(all_info[j][i])):
-                    lines_temp += str(all_info[j][i][k][0]) + ',' + str(all_info[j][i][k][1]) + ',' + str(all_info[j][i][k][2]) + ',' + str(all_info[j][i][k][3]) + ',' + str(all_info[j][i][k][4]) + ',' + str(all_info[j][i][k][5]) + ',' + str(all_info[j][i][k][6])
+                try:
+                    lines_temp = ''
+                    lines_temp = str(all_info[j][i][2]) + ',' + str(all_info[j][i][1]) + ','
+                    for k in range(3, len(all_info[j][i])):
+                        lines_temp += str(all_info[j][i][k][0]) + ',' + str(all_info[j][i][k][1]) + ',' + str(all_info[j][i][k][2]) + ',' + str(all_info[j][i][k][3]) + ',' + str(all_info[j][i][k][4]) + ',' + str(all_info[j][i][k][5]) + ',' + str(all_info[j][i][k][6])
 
-                    if k == len(all_info[j][i]) - 1:
-                        lines_temp += '\n'
-                    else:
-                        lines_temp += ','
+                        if k == len(all_info[j][i]) - 1:
+                            lines_temp += '\n'
+                        else:
+                            lines_temp += ','
 
-                lines.append(lines_temp)
+                    lines.append(lines_temp)
+                except IndexError:
+                    continue
 
             self.writeFile(lines, filename_list[i])
 

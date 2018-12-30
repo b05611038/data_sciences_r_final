@@ -6,16 +6,7 @@ from dataprocessing.roadlevel import RLdata
 from dataprocessing.save import RLStore, VDStore
 
 from utils import *
-
+import wget
 if __name__ == '__main__':
-    data = []
-    test = VDdata('./data/vd_value_0928.xml.gz', mode = 'no')
-    data.append(test.grab())
-    test = VDdata('./data/vd_value_2352.xml.gz', mode = 'no')
-    data.append(test.grab())
-    test = VDdata('./data/vd_value_2353.xml.gz', mode = 'no')
-    data.append(test.grab())
-    test = VDdata('./data/vd_value_2354.xml.gz', mode = 'no')
-    data.append(test.grab())
-
-    action = VDStore(data, './csv')
+    gb = GrabHistory(from_year = 2018)
+    gb.grab()
