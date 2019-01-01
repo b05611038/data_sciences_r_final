@@ -1,6 +1,8 @@
 import os
 import numpy as np
 import pandas as pd
+
+from model.utils import *
 #--------------------------------------------------------------------------------
 #the dataloader python file is a python class which can cath all the data in the 
 #csv file which we save our data
@@ -124,7 +126,7 @@ class RLdataLoader():
         return feature.astype(np.float)
 
     def ramLimit(self, setting):
-        #calculated by one float 8 btye
+        #calculated by one float 8 byte
         return int(setting * 1024 * 1024 * 1024 / (109 * 8))
 
 
