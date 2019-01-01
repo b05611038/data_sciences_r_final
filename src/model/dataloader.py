@@ -21,6 +21,9 @@ class RLdataLoader():
         #the folder where we save the data, default is ./csv
         self.data_dir = data_dir
 
+        #import the day feature from the csv file
+        self.day_label = pd.read_csv(self.data_dir + '/label.csv')
+
         self.data = None
         self.label = None
         #control the batch of the data will not load exceed roughly 4G
@@ -31,7 +34,6 @@ class RLdataLoader():
     def build(self, time_interval):
         #return numpy array [train_data, train_target]
         #[cat(rl_value, rl_value5, features), time_travel]
-        terminate_signal = False
         for year in range(time_interval[3], time_interval[0] - 1, -1):
             for month in range(12, 0, -1):
                 for day in range(get_month_days(year, month), 0, -1):
@@ -108,9 +110,22 @@ class RLdataLoader():
         return mini_batch.astype(np.float)
 
     def dayFeature(self, date_type):
-        #not finish
+        date_type = date_type.split(' ')[0]
+        date_type = date_type.split('/')
+
+        year = int(date_type[0])
+        month = int(date_type[1])
+        day = int(date_type[2])
+
         feature = np.zeros(6)
-        feature[date_type] = 1
+        label = -1
+        for i in range(len(self.day_label)):
+            if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and elf.day_label.iloc[i, 2] == day:
+                label = self.day_label.iloc[i, 3]
+
+            if label > 0:
+                feature[label - 1] = 1
+                break
 
         return feature
 
@@ -128,5 +143,80 @@ class RLdataLoader():
     def ramLimit(self, setting):
         #calculated by one float 8 byte
         return int(setting * 1024 * 1024 * 1024 / (109 * 8))
+
+class PredictLoader():
+    def __init__(self, road_name, mode = 'rl', data_dir = './data'):
+        #the predict dataloader is the class which grab the data from now
+        #road_name is the road title we wants to predict
+        self.road_name = road_name
+        #the mode is the type which data we will use
+        self.mode = mode
+        #the data_dir is the directory class grabnow store file
+        self.data_dir = self.data_dir
+        #inherit by the brabnow class
+        self.sub_title = ['roadlevel_value.xml.gz', 'roadlevel_value5.xml.gz', 'vd_value.xml.gz', 'vd_value5.xml.gz']
+
+        self.data = None
+        self.data = self.build(self.road_name)
+
+    def build(self, road_name, mode):
+        if mode = 'rl':
+            batch_data = np.empty(108)
+            grabber = RLdata(self.data_dir + '/' + self.self.sub_title[0])
+            value = grabber.grab()
+            grabber = RLdata(self.data_dir + '/' + self.self.sub_title[1])
+            value5 = grabber.grab()
+
+            for i in range(len(value)):
+                if road_name == value[i][0]:
+                    batch_data[0] = value[i][1]
+                    batch_data[1] = value[i][2]
+                    batch_data[2] = value[i][3]
+
+                    batch_data[3: 51] = self.timeFeature(value[i][4])
+                    
+                    batch_data[51] = value5[i][1]
+                    batch_data[52] = value5[i][2]
+                    batch_data[53] = value5[i][3]
+
+                    batch_data[54: 102] = self.timeFeature(value5[i][4])
+
+                    batch_data[102: 108] = self.dayFeature(value[i][4])
+
+                    return batch_data
+        else:
+            return
+            #still working
+
+    def timeFeature(self, input_time):
+        #return the feature of length 48 one hot numpay array represent different times in a day
+        input_time = input_time.split(' ')[1]
+        input_time = input_time.split(':')
+        hour = int(input_time[0])
+        minute = int(input_time[1])
+        feature = np.zeros(48)
+        feature[2 * hour + int(minute / 30)] = 1
+
+        return feature.astype(np.float)
+
+    def dayFeature(self, date_type):
+        date_type = date_type.split(' ')[0]
+        date_type = date_type.split('/')
+
+        year = int(date_type[0])
+        month = int(date_type[1])
+        day = int(date_type[2])
+
+        feature = np.zeros(6)
+        label = -1
+        for i in range(len(self.day_label)):
+            if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and elf.day_label.iloc[i, 2] == day:
+                label = self.day_label.iloc[i, 3]
+
+            if label > 0:
+                feature[label - 1] = 1
+                break
+
+        return feature
 
 

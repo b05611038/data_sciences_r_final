@@ -1,6 +1,9 @@
 # data_sciences_r_final
 The final project in the data science r class in 2018 fall
 
+## Title
+Traffic Flow Analysis and Travel Time Prediction of Taiwan Highway
+
 ## Introduction
 In the project, we try to improve the prediction of traveling time on the highway. We had found the website which has the same function just like our prokect. Thus, we do not imitate the function of the website. We focus on the more accurate prediction of traveling time on the highway.
 
@@ -8,8 +11,9 @@ In the project, we try to improve the prediction of traveling time on the highwa
 ## Group member
 
 ```
-NTU BME, Yu-Tang Chang
-NTU BME, Jia-Yun Chen
+NTU Bio Mechatronics Engineering, Yu-Tang Chang
+NTU Bio Mechatronics Engineering, Jia-Yun Chen
+NTNU Technology Application and Human Resource Development, Jing-Chun Yuan
 ```
 
 ## Slide
