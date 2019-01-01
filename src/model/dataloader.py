@@ -75,8 +75,8 @@ class RLdataLoader():
         value = pd.read_csv(value_file)
         value5 = pd.read_csv(value5_file)
 
-        file_data = np.empty((len(value_file) - 1, 102))
-        file_label = np.empty(len(value_file) - 1)
+        file_data = np.zeros((len(value_file) - 1, 108))
+        file_label = np.zeros(len(value_file) - 1)
         for i in range(len(value_file) - 1):
             try:
                 file_data[i] = self.batchData(value.iloc[i], value5.iloc[self.searchValue5(value.iloc[i, 0], value5)])
@@ -84,7 +84,7 @@ class RLdataLoader():
             except:
                 continue
 
-        return np.nan_to_num(file_data.astype(np.float)), np.nan_to_num(file_label.astype(np.float))
+        return file_data, file_label
 
     def searchValue5(self, value_time, value5_dataframe):
         #return the index of value5
@@ -92,7 +92,6 @@ class RLdataLoader():
         for i in range(len(value5_dataframe) - 1):
             if value5_dataframe.iloc[i, 0] <= value_time and value5_dataframe.iloc[i + 1, 0] > value_time:
                 flag = True
-
             if flag:
                 return i
 
@@ -100,7 +99,7 @@ class RLdataLoader():
 
     def batchData(self, value_line, value5_line):
         #the function is used to concatenate the one mini-batch data
-        mini_batch = np.empty(108)
+        mini_batch = np.zeros(108)
         for i in range(1, len(value_line)):
             mini_batch[i - 1] = value_line.iloc[i]
 
@@ -112,7 +111,7 @@ class RLdataLoader():
         mini_batch[54: 102] = self.timeFeature(value5_line.iloc[0])
         mini_batch[102: 108] = self.dayFeature(value_line.iloc[0])
 
-        return mini_batch.astype(np.float)
+        return mini_batch
 
     def dayFeature(self, date_type):
         date_type = date_type.split(' ')[0]
@@ -125,7 +124,7 @@ class RLdataLoader():
         feature = np.zeros(6)
         label = -1
         for i in range(len(self.day_label)):
-            if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and elf.day_label.iloc[i, 2] == day:
+            if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and self.day_label.iloc[i, 2] == day:
                 label = self.day_label.iloc[i, 3]
 
             if label > 0:
@@ -143,7 +142,7 @@ class RLdataLoader():
         feature = np.zeros(48)
         feature[2 * hour + int(minute / 30)] = 1
         
-        return feature.astype(np.float)
+        return feature
 
     def ramLimit(self, setting):
         #calculated by one float 8 byte

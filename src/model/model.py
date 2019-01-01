@@ -37,8 +37,8 @@ class SVRtrain():
         train_y = dataloader.label
         del dataloader
 
-        train_x = np.nan_to_num(train_x)
-        train_y = np.nan_to_num(train_y) 
+        train_x = np.nan_to_num(train_x).astype(np.float)
+        train_y = np.nan_to_num(train_y) .astype(np.float)
 
         print('Finish data loading, Start training SVRmodel for road name ' + self.road_name)
 

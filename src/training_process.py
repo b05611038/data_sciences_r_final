@@ -20,9 +20,6 @@ if __name__ == '__main__':
     #gb = GrabHistory(from_year = 2018)
     #gb.grab()
 
-    gn = GrabNow()
-    gn.update()
-
     info = RLInfo().grab()
     routeid = {}
     for i in range(len(info)):
