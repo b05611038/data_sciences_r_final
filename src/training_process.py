@@ -17,16 +17,19 @@ from utils import *
 #put inside and separated by different year, month and day
 #--------------------------------------------------------------------------------
 if __name__ == '__main__':
-    #gb = GrabHistory(from_year = 2018)
-    #gb.grab()
+    gb = GrabHistory(from_year = 2020)
+    gb.grab()
 
     info = RLInfo().grab()
     routeid = {}
     for i in range(len(info)):
         routeid[info[i][0]] = info[i][5]
-        worker = SVRtrain(info[i][0], [2018, 1, 1, 2018, 6, 23])
-        worker.train()
-        worker.save()
+        try:
+            worker = SVRtrain(info[i][0], [2018, 1, 1, 2018, 6, 23])
+            worker.train()
+            worker.save()
+        except:
+            print('Something wrong, skip training model: ' + info[i][5])
 
     save_object('./data/refer.pkl', routeid)
 
