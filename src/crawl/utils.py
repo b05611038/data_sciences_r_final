@@ -20,3 +20,5 @@ def get_time(mode):
 
 def get_month_days(year, month):
     return calendar.monthrange(year, month)[1]
+
+

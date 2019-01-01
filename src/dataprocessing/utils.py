@@ -9,3 +9,5 @@ def read_gz(file_path):
     f.close()
     file_content = file_content.decode('utf-8')
     return file_content
+
+

@@ -47,3 +47,5 @@ class GrabNow():
         file_list = os.listdir(self.save_dir)
         for files in file_list:
             os.remove(self.save_dir + '/'+ files)
+
+

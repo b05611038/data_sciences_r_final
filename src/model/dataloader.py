@@ -19,19 +19,38 @@ class RLdataLoader():
         #the folder where we save the data, default is ./csv
         self.data_dir = data_dir
 
+        self.data = None
+        self.label = None
         #control the batch of the data will not load exceed roughly 4G
         self.batch_size = self.ramLimit(ram_limit)
+
+        self.build()
 
     def build(self, time_interval):
         #return numpy array [train_data, train_target]
         #[cat(rl_value, rl_value5, features), time_travel]
+        terminate_signal = False
         for year in range(time_interval[3], time_interval[0] - 1, -1):
             for month in range(12, 0, -1):
                 for day in range(get_month_days(year, month), 0, -1):
                     if year == time_interval[3] and ((month > time_interval[4]) or (month == time_interval[4] and day > time_interval[5])):
                         continue
 
-                     #main code, not finish
+                     #the path where we store the training data
+                     value_path = self.data_dir + '/' + str(year) + '/' + '%02d' % month + '/' + '%02d' % day + '/rl/' + self.road_name + '.csv'
+                     value5_path = self.data_dir + '/' + str(year) + '/' + '%02d' % month + '/' + '%02d' % day + '/rl5/' + self.road_name + '.csv'
+
+                     if self.data is None or self.data.shape[0] < self.batch_size:
+                         if self.data is None and self.label is None:
+                             self.data, self.label = self.fileData(value_path, value5_path)
+                         else:
+                             temp_data, temp_label = self.fileData(value_path, value5_path)
+                             self.data = np.concatenate((self.data, temp_data), axis = 0)
+                             self.label = np.concatenate((self.label, temp_label), axis = 0)
+                             del temp_data, temp_label
+
+                     else:
+                         return       
 
                      if year == time_interval[0] and month == time_interval[1] and day == time_interval[2]:
                          break
@@ -41,8 +60,6 @@ class RLdataLoader():
 
         if year == time_interval[0]
             break
-                    
-
 
     def fileData(self, value_file, value5_file):
         #read the data by pandas lib indata is pd.dataframe
@@ -50,10 +67,15 @@ class RLdataLoader():
         value5 = pd.read_csv(value5_file)
 
         file_data = np.empty((len(value_file) - 1, 102))
+        file_label = np.empty(len(value_file) - 1)
         for i in range(len(value_file) - 1):
-            file_data[i] = self.batchData(value.iloc[i], value5.iloc[self.searchValue5(value.iloc[i, 0], value5)])
+            try:
+                file_data[i] = self.batchData(value.iloc[i], value5.iloc[self.searchValue5(value.iloc[i, 0], value5)])
+                file_label[i] = value.iloc[i + 1, 3]
+            except:
+                continue
 
-        return file_data
+        return file_data, file_label.astype(np.float)
 
     def searchValue5(self, value_time, value5_dataframe):
         #return the index of value5
@@ -104,3 +126,5 @@ class RLdataLoader():
     def ramLimit(self, setting):
         #calculated by one float 8 btye
         return int(setting * 1024 * 1024 * 1024 / (109 * 8))
+
+

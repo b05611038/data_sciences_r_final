@@ -138,3 +138,5 @@ class GrabHistory():
             f = open(self.path + '/model_date.txt', 'w')
             f.writelines(datetime.date.today().isoformat())
             f.close()
+
+

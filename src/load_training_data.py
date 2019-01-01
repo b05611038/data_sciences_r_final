@@ -12,3 +12,5 @@ from utils import *
 if __name__ == '__main__':
     gb = GrabHistory(from_year = 2018)
     gb.grab()
+
+

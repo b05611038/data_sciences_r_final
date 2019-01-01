@@ -19,6 +19,8 @@ class RLInfo():
         if not os.path.isfile(self.files):
             wget.download('http://tisvcloud.freeway.gov.tw/roadlevel_info.xml.gz')
 
+        self.build()
+
     def build(self):
         data = read_gz(self.files)
         data = data.split('\n')
@@ -27,7 +29,7 @@ class RLInfo():
 
     def grab(self):
         if len(self.info) == 0:
-            print('Please initial the info list by RLInfo.build()')
+            print('Please check the file and the path setting')
             return None
         else:
             return self.info
@@ -60,6 +62,8 @@ class VDInfo():
         if not os.path.isfile(self.files):
             wget.download('http://tisvcloud.freeway.gov.tw/vd_info.xml.gz')
 
+        self.build()
+
     def build(self):
         data = read_gz(self.files)
         data = data.split('\n')
@@ -68,7 +72,7 @@ class VDInfo():
 
     def grab(self):
         if len(self.info) == 0:
-            print('Please initial the info list by RLInfo.build()')
+            print('Please check the file and the path setting')
             return None
         else:
             return self.info
@@ -87,3 +91,5 @@ class VDInfo():
             info.append(inString[i])
 
         return info
+
+
