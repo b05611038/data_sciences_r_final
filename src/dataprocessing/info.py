@@ -17,7 +17,7 @@ class RLInfo():
 
         #to download the info file from the internet
         if not os.path.isfile(self.files):
-            wget.download('http://tisvcloud.freeway.gov.tw/roadlevel_info.xml.gz')
+            wget.download('http://tisvcloud.freeway.gov.tw/roadlevel_info.xml.gz', out = self.files)
 
         self.build()
 
@@ -60,7 +60,7 @@ class VDInfo():
 
         #to download the info file from the internet
         if not os.path.isfile(self.files):
-            wget.download('http://tisvcloud.freeway.gov.tw/vd_info.xml.gz')
+            wget.download('http://tisvcloud.freeway.gov.tw/vd_info.xml.gz', out = self.files)
 
         self.build()
 

@@ -30,7 +30,7 @@ class SVRtrain():
 
     def train(self):
         #the mode will have three mode for different traininig data, but still working
-        if self.mode = 'rl':
+        if self.mode == 'rl':
             dataloader = RLdataLoader(self.road_name, self.time_interval)
 
         train_x = dataloader.data
@@ -49,7 +49,7 @@ class SVRmodel():
         if type(model) == str:
             #menas the model is from the path
             self.model = load_object(model)
-        elif type(model) == sklearn.svm.classes.SVR
+        elif type(model) == sklearn.svm.classes.SVR:
             self.model = model
         else:
             print('Please check your model')

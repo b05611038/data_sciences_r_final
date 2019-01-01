@@ -9,7 +9,8 @@ from model.utils import *
 #all the info will be output as a numpy array in order to fit the datatype of the
 #machine learning library sklearn for the tine regression problem
 #--------------------------------------------------------------------------------
-class VDdataLoader():
+#class VDdataLoader():
+#    def __init__(self):
     #suspension for the project need roadlevel data first
 
 class RLdataLoader():
@@ -29,7 +30,7 @@ class RLdataLoader():
         #control the batch of the data will not load exceed roughly 4G
         self.batch_size = self.ramLimit(ram_limit)
 
-        self.build()
+        self.build(self.time_interval)
 
     def build(self, time_interval):
         #return numpy array [train_data, train_target]
@@ -40,30 +41,28 @@ class RLdataLoader():
                     if year == time_interval[3] and ((month > time_interval[4]) or (month == time_interval[4] and day > time_interval[5])):
                         continue
 
-                     #the path where we store the training data
-                     value_path = self.data_dir + '/' + str(year) + '/' + '%02d' % month + '/' + '%02d' % day + '/rl/' + self.road_name + '.csv'
-                     value5_path = self.data_dir + '/' + str(year) + '/' + '%02d' % month + '/' + '%02d' % day + '/rl5/' + self.road_name + '.csv'
+                    #the path where we store the training data
+                    value_path = self.data_dir + '/' + str(year) + '/' + '%02d' % month + '/' + '%02d' % day + '/rl/' + self.road_name + '.csv'
+                    value5_path = self.data_dir + '/' + str(year) + '/' + '%02d' % month + '/' + '%02d' % day + '/rl5/' + self.road_name + '.csv'
 
-                     if self.data is None or self.data.shape[0] < self.batch_size:
-                         if self.data is None and self.label is None:
-                             self.data, self.label = self.fileData(value_path, value5_path)
-                         else:
-                             temp_data, temp_label = self.fileData(value_path, value5_path)
-                             self.data = np.concatenate((self.data, temp_data), axis = 0)
-                             self.label = np.concatenate((self.label, temp_label), axis = 0)
-                             del temp_data, temp_label
+                    if self.data is None or self.data.shape[0] < self.batch_size:
+                        if self.data is None and self.label is None:
+                            self.data, self.label = self.fileData(value_path, value5_path)
+                        else:
+                            temp_data, temp_label = self.fileData(value_path, value5_path)
+                            self.data = np.concatenate((self.data, temp_data), axis = 0)
+                            self.label = np.concatenate((self.label, temp_label), axis = 0)
+                            del temp_data, temp_label
 
-                     else:
-                         return       
+                    else:
+                        return       
 
-                     if year == time_interval[0] and month == time_interval[1] and day == time_interval[2]:
-                         break
-
-            if year == time_interval[0] and month == time_interval[1]:
+                    if year == time_interval[0] and month == time_interval[1] and day == time_interval[2]:
+                        break
+                if year == time_interval[0] and month == time_interval[1]:
+                    break
+            if year == time_interval[0]:
                 break
-
-        if year == time_interval[0]
-            break
 
     def fileData(self, value_file, value5_file):
         #read the data by pandas lib indata is pd.dataframe
@@ -160,7 +159,7 @@ class PredictLoader():
         self.data = self.build(self.road_name)
 
     def build(self, road_name, mode):
-        if mode = 'rl':
+        if mode == 'rl':
             batch_data = np.empty(108)
             grabber = RLdata(self.data_dir + '/' + self.self.sub_title[0])
             value = grabber.grab()

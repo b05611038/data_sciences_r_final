@@ -5,7 +5,7 @@ from model.model import *
 from model.dataloader import *
 from model.utils import *
 
-from dataprocess.info import *
+from dataprocessing.info import *
 
 from utils import *
 #--------------------------------------------------------------------------------
@@ -17,8 +17,8 @@ from utils import *
 #put inside and separated by different year, month and day
 #--------------------------------------------------------------------------------
 if __name__ == '__main__':
-    gb = GrabHistory(from_year = 2018)
-    gb.grab()
+    #gb = GrabHistory(from_year = 2018)
+    #gb.grab()
 
     gn = GrabNow()
     gn.update()

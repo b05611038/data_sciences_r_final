@@ -20,7 +20,7 @@ class GrabNow():
         self.latest = self.latest[0] + self.latest[1]
 
         #the filename need to download
-        self.sub_title = ['roadlevel_value.xml.gz', 'roadlevel_value5.xml.gz', 'vd_value.xml.gz', 'vd_value5.xml.gz']
+        self.sub_title = ['roadlevel_value.xml.gz', 'roadlevel_value5.xml.gz', 'vd_value.xml.gz', 'vd_value5.xml.gz', 'roadlevel_info.xml.gz', 'vd_info.xml.gz']
 
         #folder setup for the application
         if not os.path.exists(self.save_dir):
