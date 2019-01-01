@@ -26,7 +26,7 @@ class SVRtrain():
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
 
-        self.model = SVR(gamma = 'scale', C = 10.0, verbose = True)
+        self.model = SVR(gamma = 0.001, C = 10.0, verbose = True)
 
     def train(self):
         #the mode will have three mode for different traininig data, but still working
@@ -37,12 +37,15 @@ class SVRtrain():
         train_y = dataloader.label
         del dataloader
 
+        train_x = np.nan_to_num(train_x)
+        train_y = np.nan_to_num(train_y) 
+
         print('Finish data loading, Start training SVRmodel for road name ' + self.road_name)
 
         self.model.fit(train_x, train_y)
 
     def save(self):
-        save_object(self.save_dir + '/' + road_name + '.pkl', self.model)
+        save_object(self.save_dir + '/' + self.road_name + '.pkl', self.model)
 
 class SVRmodel():
     def __init__(self, model):

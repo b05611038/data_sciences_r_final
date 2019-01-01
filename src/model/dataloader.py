@@ -30,15 +30,15 @@ class RLdataLoader():
         #control the batch of the data will not load exceed roughly 4G
         self.batch_size = self.ramLimit(ram_limit)
 
-        self.build(self.time_interval)
+        self.build()
 
-    def build(self, time_interval):
+    def build(self):
         #return numpy array [train_data, train_target]
         #[cat(rl_value, rl_value5, features), time_travel]
-        for year in range(time_interval[3], time_interval[0] - 1, -1):
+        for year in range(self.time_interval[3], self.time_interval[0] - 1, -1):
             for month in range(12, 0, -1):
                 for day in range(get_month_days(year, month), 0, -1):
-                    if year == time_interval[3] and ((month > time_interval[4]) or (month == time_interval[4] and day > time_interval[5])):
+                    if year == self.time_interval[3] and ((month > self.time_interval[4]) or (month == self.time_interval[4] and day > self.time_interval[5])):
                         continue
 
                     #the path where we store the training data
@@ -47,21 +47,27 @@ class RLdataLoader():
 
                     if self.data is None or self.data.shape[0] < self.batch_size:
                         if self.data is None and self.label is None:
-                            self.data, self.label = self.fileData(value_path, value5_path)
+                            try:
+                                self.data, self.label = self.fileData(value_path, value5_path)
+                            except:
+                                continue
                         else:
-                            temp_data, temp_label = self.fileData(value_path, value5_path)
-                            self.data = np.concatenate((self.data, temp_data), axis = 0)
-                            self.label = np.concatenate((self.label, temp_label), axis = 0)
-                            del temp_data, temp_label
+                            try:
+                                temp_data, temp_label = self.fileData(value_path, value5_path)
+                                self.data = np.concatenate((self.data, temp_data), axis = 0)
+                                self.label = np.concatenate((self.label, temp_label), axis = 0)
+                                del temp_data, temp_label
+                            except:
+                                continue
 
                     else:
                         return       
 
-                    if year == time_interval[0] and month == time_interval[1] and day == time_interval[2]:
+                    if year == self.time_interval[0] and month == self.time_interval[1] and day == self.time_interval[2]:
                         break
-                if year == time_interval[0] and month == time_interval[1]:
+                if year == self.time_interval[0] and month == self.time_interval[1]:
                     break
-            if year == time_interval[0]:
+            if year == self.time_interval[0]:
                 break
 
     def fileData(self, value_file, value5_file):
@@ -78,7 +84,7 @@ class RLdataLoader():
             except:
                 continue
 
-        return file_data, file_label.astype(np.float)
+        return np.nan_to_num(file_data.astype(np.float)), np.nan_to_num(file_label.astype(np.float))
 
     def searchValue5(self, value_time, value5_dataframe):
         #return the index of value5
@@ -182,7 +188,7 @@ class PredictLoader():
 
                     batch_data[102: 108] = self.dayFeature(value[i][4])
 
-                    return batch_data
+                    return np.nan_to_num(batch_data.astype(np.float))
         else:
             return
             #still working

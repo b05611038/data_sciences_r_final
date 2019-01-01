@@ -27,7 +27,7 @@ if __name__ == '__main__':
     routeid = {}
     for i in range(len(info)):
         routeid[info[i][0]] = info[i][5]
-        worker = SVRtrain(info[i][0], [2018, 1, 1, 2018, 5, 30])
+        worker = SVRtrain(info[i][0], [2018, 1, 1, 2018, 6, 23])
         worker.train()
         worker.save()
 
