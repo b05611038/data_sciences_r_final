@@ -1,4 +1,11 @@
 from crawl.grabhistory import GrabHistory
+from crawl.grabnow import GrabNow
+
+from model.model import *
+from model.dataloader import *
+from model.utils import *
+
+from dataprocess.info import *
 
 from utils import *
 #--------------------------------------------------------------------------------
@@ -12,5 +19,18 @@ from utils import *
 if __name__ == '__main__':
     gb = GrabHistory(from_year = 2018)
     gb.grab()
+
+    gn = GrabNow()
+    gn.update()
+
+    info = RLInfo().grab()
+    routeid = {}
+    for i in range(len(info)):
+        routeid[info[i][0]] = info[i][5]
+        worker = SVRtrain(info[i][0], [2018, 1, 1, 2018, 5, 30])
+        worker.train()
+        worker.save()
+
+    save_object('./data/refer.pkl', routeid)
 
 

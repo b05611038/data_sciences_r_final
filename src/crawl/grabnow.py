@@ -8,7 +8,7 @@ from crawl.utils import *
 #the grabnow.py is the setup file of app opening
 #--------------------------------------------------------------------------------
 class GrabNow():
-    def __init__(self, save_dir = './data_now', url = 'http://tisvcloud.freeway.gov.tw/'):
+    def __init__(self, save_dir = './data', url = 'http://tisvcloud.freeway.gov.tw/'):
         #the directory of the data is the folder the app will save the information of now
         self.save_dir = save_dir
 
