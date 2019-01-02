@@ -26,7 +26,7 @@ class Route():
         #return the middle part of the road in order
         route = []
         index = [-1, -1]
-        for i in range(maps):
+        for i in range(len(maps)):
             if maps[i][3] == start:
                 index[0] = i
             if maps[i][3] == target:
@@ -47,7 +47,7 @@ class Route():
         for i in range(len(info)):
             map_info.append(self.extract(info[i]))
 
-        return maps
+        return map_info
 
     def extract(self, line_info):
         #extract the information from a list returned by roadlevel info
@@ -55,11 +55,14 @@ class Route():
         #routeid
         lines.append(line_info[0])
 
-        text = line_info[5].replace(')', '').split('(')
+        text = line_info[5][::-1].replace(')', '', 1)
+        text = text[::-1].split('(', 1)
+
         #freeway number one
         lines.append(text[0])
         text = text[1]
         text = text.split('到')
+
         lines.append(text[0])
         lines.append(text[1])
 
