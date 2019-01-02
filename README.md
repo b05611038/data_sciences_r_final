@@ -6,6 +6,7 @@ Traffic Flow Analysis and Travel Time Prediction of Taiwan Freeway
 
 ## Introduction
 In the project, we try to improve the prediction of traveling time on the highway. We had found the website which has the same function just like our project. Thus, we do not imitate the function of the website. We focus on the more accurate prediction of traveling time on the highway.
+Note: all program in the project is based on python3.5.2, please check the version is newer than it.
 
 
 ## Group member
@@ -19,7 +20,8 @@ NTNU Technology Application and Human Resource Development, Jing-Chun Yuan
 ## Slide
 
 The slide we used in the final report in 2019/01/03 in National Taiwan University.
-[slide link]()
+[slide link(Google drive)](https://drive.google.com/open?id=1__Q59EmY8x_fgnyUowpCQo0v-b45ZNBe)
+[backup link(Github)]()
 
 
 ## Demo Video
