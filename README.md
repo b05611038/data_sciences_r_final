@@ -1,5 +1,5 @@
 # data_sciences_r_final
-The final project in the data science r class in 2018 fall
+The final project in the data science r class in 2018 fall.
 
 ## Title
 Traffic Flow Analysis and Travel Time Prediction of Taiwan Freeway
@@ -40,9 +40,14 @@ Still working...
 ## Training Model
 The shell script will grab the data from database and sort the data. Finally training the SVR model for travel time prediction in feature of time feature(00:00 and 00:30 will have different input to the model). Then, we labeled the vacation for different day feature. Also, we grab the data from the database in real time. Finally, all the features would concatenate and put into SVR model for training and prediction. The following is the program for user training. 
 
+### Unix envirnment(MacOS, linux)
+
 ```sh
 ./train.sh
 ```
+
+### Windows envirnement
+Still working...
 
 ## Reference Website
 The reference website we mentioned in the introduction.

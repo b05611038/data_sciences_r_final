@@ -10,7 +10,7 @@ from model.utils import *
 #machine learning library sklearn for the tine regression problem
 #--------------------------------------------------------------------------------
 #class VDdataLoader():
-#    def __init__(self):
+    #def __init__(self):
     #suspension for the project need roadlevel data first
 
 class RLdataLoader():
@@ -149,10 +149,12 @@ class RLdataLoader():
         return int(setting * 1024 * 1024 * 1024 / (109 * 8))
 
 class PredictLoader():
-    def __init__(self, road_name, mode = 'rl', data_dir = './data'):
+    def __init__(self, road_name, now = None, mode = 'rl', data_dir = './data'):
         #the predict dataloader is the class which grab the data from now
         #road_name is the road title we wants to predict
         self.road_name = road_name
+        #now is cummulated times for the prediction, default is None, will grab time info from crawling program
+        self.now = now
         #the mode is the type which data we will use
         self.mode = mode
         #the data_dir is the directory class grabnow store file
@@ -161,9 +163,9 @@ class PredictLoader():
         self.sub_title = ['roadlevel_value.xml.gz', 'roadlevel_value5.xml.gz', 'vd_value.xml.gz', 'vd_value5.xml.gz']
 
         self.data = None
-        self.data = self.build(self.road_name)
+        self.data = self.build(self.road_name, self.now, self.mode)
 
-    def build(self, road_name, mode):
+    def build(self, road_name, now, mode):
         if mode == 'rl':
             batch_data = np.empty(108)
             grabber = RLdata(self.data_dir + '/' + self.self.sub_title[0])
@@ -187,40 +189,67 @@ class PredictLoader():
 
                     batch_data[102: 108] = self.dayFeature(value[i][4])
 
-                    return np.nan_to_num(batch_data.astype(np.float))
+                    return batch_data
         else:
             return
             #still working
 
     def timeFeature(self, input_time):
         #return the feature of length 48 one hot numpay array represent different times in a day
-        input_time = input_time.split(' ')[1]
-        input_time = input_time.split(':')
-        hour = int(input_time[0])
-        minute = int(input_time[1])
-        feature = np.zeros(48)
-        feature[2 * hour + int(minute / 30)] = 1
+        if type(input_time) == str:
+            input_time = input_time.split(' ')[1]
+            input_time = input_time.split(':')
+            hour = int(input_time[0])
+            minute = int(input_time[1])
+            feature = np.zeros(48)
+            feature[2 * hour + int(minute / 30)] = 1
 
-        return feature.astype(np.float)
+            return feature
+        else:
+            #input list [hour, minute]
+            hour = int(input_time[0])
+            minute = int(input_time[1])
+            feature = np.zeros(48)
+            feature[2 * hour + int(minute / 30)] = 1
+
+            return feature
 
     def dayFeature(self, date_type):
-        date_type = date_type.split(' ')[0]
-        date_type = date_type.split('/')
+        if type(date_type) == str:
+            date_type = date_type.split(' ')[0]
+            date_type = date_type.split('/')
 
-        year = int(date_type[0])
-        month = int(date_type[1])
-        day = int(date_type[2])
+            year = int(date_type[0])
+            month = int(date_type[1])
+            day = int(date_type[2])
 
-        feature = np.zeros(6)
-        label = -1
-        for i in range(len(self.day_label)):
-            if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and elf.day_label.iloc[i, 2] == day:
-                label = self.day_label.iloc[i, 3]
+            feature = np.zeros(6)
+            label = -1
+            for i in range(len(self.day_label)):
+                if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and elf.day_label.iloc[i, 2] == day:
+                    label = self.day_label.iloc[i, 3]
 
-            if label > 0:
-                feature[label - 1] = 1
-                break
+                if label > 0:
+                    feature[label - 1] = 1
+                    break
 
-        return feature
+            return feature
+        else:
+            #input is time of list
+            year = int(date_type[0])
+            month = int(date_type[1])
+            day = int(date_type[2])
+
+            feature = np.zeros(6)
+            label = -1
+            for i in range(len(self.day_label)):
+                if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and elf.day_label.iloc[i, 2] == day:
+                    label = self.day_label.iloc[i, 3]
+
+                if label > 0:
+                    feature[label - 1] = 1
+                    break
+
+            return feature
 
 
