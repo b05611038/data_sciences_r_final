@@ -163,9 +163,9 @@ class PredictLoader():
         self.sub_title = ['roadlevel_value.xml.gz', 'roadlevel_value5.xml.gz', 'vd_value.xml.gz', 'vd_value5.xml.gz']
 
         self.data = None
-        self.data = self.build(self.road_name, self.now, self.mode)
+        self.data = self.build(self.road_name, self.mode)
 
-    def build(self, road_name, now, mode):
+    def build(self, road_name, mode):
         if mode == 'rl':
             batch_data = np.empty(108)
             grabber = RLdata(self.data_dir + '/' + self.self.sub_title[0])
@@ -173,21 +173,24 @@ class PredictLoader():
             grabber = RLdata(self.data_dir + '/' + self.self.sub_title[1])
             value5 = grabber.grab()
 
+            if now == None:
+                self.now = value[i][4]
+
             for i in range(len(value)):
                 if road_name == value[i][0]:
                     batch_data[0] = value[i][1]
                     batch_data[1] = value[i][2]
                     batch_data[2] = value[i][3]
 
-                    batch_data[3: 51] = self.timeFeature(value[i][4])
+                    batch_data[3: 51] = self.timeFeature(self.now)
                     
                     batch_data[51] = value5[i][1]
                     batch_data[52] = value5[i][2]
                     batch_data[53] = value5[i][3]
 
-                    batch_data[54: 102] = self.timeFeature(value5[i][4])
+                    batch_data[54: 102] = self.timeFeature(self.now)
 
-                    batch_data[102: 108] = self.dayFeature(value[i][4])
+                    batch_data[102: 108] = self.dayFeature(self.now)
 
                     return batch_data
         else:
