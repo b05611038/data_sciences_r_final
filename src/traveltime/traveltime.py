@@ -24,15 +24,21 @@ class Ttime():
 
         #the list of time right now
         self.timeReset()
-        self.route = self.showRoute(self.start, self.target)
+        self.route, self.way = self.showRoute(self.start, self.target)
 
     def show(self):
         print('Now times: ' + datetime.datetime.now().isoformat().split('.')[0])
 
         print('Start predict the times...')
         spend = self.predictTime(self.route)
-        print('You are going to arrive at ' + timeToString(self.time))
-        print('About spending ' + secondString(spend))
+
+        print('You will go through: ')
+
+        for i in range(len(self.way)):
+            print(self.way[i])
+
+        print('\nYou are going to arrive at ' + timeToString(self.time))
+        print('All times about ' + secondString(spend))
 
     def predictTime(self, route):
         #the main part of the project
@@ -96,6 +102,7 @@ class Ttime():
         #return all the road intervl we need to go
         plan = Route(start, target)
         route = plan.grab()
-        return route
+        way = plan.grabWay()
+        return route, way
 
 

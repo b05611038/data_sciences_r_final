@@ -1,5 +1,6 @@
+import sys
+
 from crawl.grabhistory import GrabHistory
-from crawl.grabnow import GrabNow
 
 from model.model import *
 from model.dataloader import *
@@ -17,20 +18,21 @@ from utils import *
 #put inside and separated by different year, month and day
 #--------------------------------------------------------------------------------
 if __name__ == '__main__':
-    gb = GrabHistory(from_year = 2020)
+    if len(sys.argv) < 2:
+        print('PLease put in the needed information correctly.')
+
+    gb = GrabHistory(from_year = int(sys.argv[1]))
     gb.grab()
 
     info = RLInfo().grab()
-    routeid = {}
+    now = get_time('day') 
     for i in range(len(info)):
         routeid[info[i][0]] = info[i][5]
         try:
-            worker = SVRtrain(info[i][0], [2018, 1, 1, 2018, 6, 23])
+            worker = SVRtrain(info[i][0], [int(sys.argv[1])), 1, 1, now[0], now[1], now[2] - 1])
             worker.train()
             worker.save()
         except:
             print('Something wrong, skip training model: ' + info[i][5])
-
-    save_object('./data/refer.pkl', routeid)
 
 

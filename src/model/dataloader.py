@@ -175,9 +175,9 @@ class PredictLoader():
     def build(self, road_name, mode):
         if mode == 'rl':
             batch_data = np.empty(108)
-            grabber = RLdata(self.data_dir + '/' + self.sub_title[0])
+            grabber = RLdata(self.data_dir + '/' + self.sub_title[0], mode = 'No')
             value = grabber.grab()
-            grabber = RLdata(self.data_dir + '/' + self.sub_title[1])
+            grabber = RLdata(self.data_dir + '/' + self.sub_title[1], mode = 'No')
             value5 = grabber.grab()
 
             if self.now == None:

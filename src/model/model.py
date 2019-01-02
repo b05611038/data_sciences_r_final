@@ -12,7 +12,7 @@ from utils import *
 #improve the preformance of the true highway time prediction
 #--------------------------------------------------------------------------------
 class SVRtrain():
-    def __init__(self, road_name, time_interval, save_dir = './model_weight', mode = 'rl'):
+    def __init__(self, road_name, time_interval, C, save_dir = './model_weight', mode = 'rl'):
         #road_name is the para that the road range we want to training
         self.road_name = road_name
         #time interval is the para we need to pass in dataloader
@@ -23,10 +23,13 @@ class SVRtrain():
         #mode is dertermine that the model's traninig data we use, default is 'rl'
         self.mode = mode
 
+        #C is the parameter of SVR model
+        self.C = C
+
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
 
-        self.model = SVR(gamma = 0.001, C = 10.0, verbose = True)
+        self.model = SVR(gamma = 0.001, C = self.C, verbose = True)
 
     def train(self):
         #the mode will have three mode for different traininig data, but still working

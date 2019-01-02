@@ -25,7 +25,7 @@ def timeToString(times):
     #will convert time list to string
     return str(times[0]) + '-' + '%02d' % times[1] + '-' + '%02d' % times[2] + 'T' + '%02d' % times[3] + ':' + '%02d' % times[4] + ':' + '%02d' % times[5]
 
-def secondString(times, display = 5):
+def secondString(seconds, display = 5):
     #will convert seconds to minutes or hour
     intervals = (
     ('weeks', 604800),  # 60 * 60 * 24 * 7
@@ -44,4 +44,4 @@ def secondString(times, display = 5):
             if value == 1:
                 name = name.rstrip('s')
             result.append("{} {}".format(value, name))
-    return ', '.join(result[:display])
+    return ', '.join(result[:display]).replace('[', '').replace(']', '')

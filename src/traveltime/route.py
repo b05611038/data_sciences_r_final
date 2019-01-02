@@ -9,7 +9,7 @@ from traveltime.utils import *
 #the route.py will provide the connection of each part of the highway
 #--------------------------------------------------------------------------------
 class Route():
-    def __init__(self, start, target, road_ref = './csv/roadlevel_info.xml.gz'):
+    def __init__(self, start, target, road_ref = './data/roadlevel_info.xml.gz'):
         #the route class is the map of the highway, will provide the middle route from start to target
         self.start = start
         self.target = target
@@ -17,14 +17,29 @@ class Route():
         #road_ref is teh reference of each route which is already sorted
         self.road_ref = road_ref
         self.route_order = self.maps(self.road_ref)
-        self.route = self.plan(self.start, self.target, self.route_order)
+        self.route, self.way = self.plan(self.start, self.target, self.route_order)
 
+    def printAll(self):
+        print('\nThere are all gate way you can select:')
+        for i in range(len(self.route_order) // 2 + 1):
+            try:
+                print('{:\u3000<20} {:>12}'.format(self.route_order[i * 2][2], self.route_order[i * 2 + 1][2]))
+            except:
+                try:
+                    print('{:\u3000<20} {:>12}'.format(self.route_order[i * 2][2]))
+                except:
+                    continue
+                         
     def grab(self):
         return self.route
+
+    def grabWay(self):
+        return self.way
 
     def plan(self, start, target, maps):
         #return the middle part of the road in order
         route = []
+        order = []
         index = [-1, -1]
         for i in range(len(maps)):
             if maps[i][3] == start:
@@ -34,9 +49,14 @@ class Route():
 
         index.sort()
         for indexs in range(index[0], index[1] + 1):
+            if indexs == index[0]:
+                order.append(maps[indexs - 1][2])
             route.append(maps[indexs][0])
+            order.append(maps[indexs][2])
+            if indexs == index[1]:
+                order.append(maps[indexs][3])
 
-        return route
+        return route, order
 
     def maps(self, ref):
         #[[routeid, road_level, start, end]]
