@@ -34,7 +34,7 @@ The video we show the function of the project.
 The main program will interact with user. It will print out the start gate where you drive on freeway, and it will also print the middle gate of the freeway which is in the midway of your traveling. The most important of the project is that the program will predict how much time you will need from start gate to end gate. The program also grab the time right now and it will help you knows when you will arrive.
 
 ### Setup
-
+Please make sure that you have the premission of install python3 packages, and the package of wget and zips.
 ```sh
 ./setup.sh
 ``` 
