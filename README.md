@@ -29,6 +29,15 @@ The video we show the function of the project.
 
 
 ## Unix envirnment(MacOS, linux)
+The main program will interact with user. It will print out the start gate where you drive on freeway, and it will also print the middle gate of the freeway which is in the midway of your traveling. The most important of the project is that the program will predict how much time you will need from start gate to end gate. The program also grab the time right now and it will help you knows when you will arrive.
+
+### Setup
+
+```sh
+./setup.sh
+``` 
+
+### Main program
 
 ```sh
 ./run.sh
@@ -38,7 +47,7 @@ The video we show the function of the project.
 Still working...
 
 ## Training Model
-The shell script will grab the data from database and sort the data. Finally training the SVR model for travel time prediction in feature of time feature(00:00 and 00:30 will have different input to the model). Then, we labeled the vacation for different day feature. Also, we grab the data from the database in real time. Finally, all the features would concatenate and put into SVR model for training and prediction. The following is the program for user training. 
+The shell script will grab the data from database and sort the data(if choose yes). Finally training the SVR model for travel time prediction in feature of time feature(00:00 and 00:30 will have different input to the model). Then, we labeled the vacation for different day feature. Also, we grab the data from the database in real time. Finally, all the features would concatenate and put into SVR model for training and prediction. The following is the program for user training. 
 
 ### Unix envirnment(MacOS, linux)
 

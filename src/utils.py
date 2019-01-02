@@ -29,4 +29,9 @@ def get_time(mode):
     elif mode == 'second':
         return [int(i) for i in sum([date, times], [])]
 
+def timeFormat(string):
+    text = string.split('/')
+    for i in range(len(text)):
+        text[i] = int(text[i])
 
+    return text
