@@ -21,13 +21,13 @@ NTNU Technology Application and Human Resource Development, Jing-Chun Yuan
 
 The slide we used in the final report in 2019/01/03 in National Taiwan University.
 [slide link(Google drive)](https://drive.google.com/open?id=1__Q59EmY8x_fgnyUowpCQo0v-b45ZNBe)
-[backup link(Github)]()
+[backup link(Github)](https://github.com/b05611038/data_sciences_r_final/blob/master/final_slide.pdf)
 
 
 ## Demo Video
 
 The video we show the function of the project.
-[Demo link]()
+[Demo link(Google drive)](https://drive.google.com/open?id=1skdbr1zV2DkcQMjffKez-CGjDCFdtgZJ)
 
 
 ## Unix envirnment(MacOS, linux)
