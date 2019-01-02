@@ -31,7 +31,7 @@ class SVRtrain():
     def train(self):
         #the mode will have three mode for different traininig data, but still working
         if self.mode == 'rl':
-            dataloader = RLdataLoader(self.road_name, self.time_interval)
+            dataloader = RLdataLoader(self.road_name, self.time_interval, ram_limit = 32)
 
         train_x = dataloader.data
         train_y = dataloader.label

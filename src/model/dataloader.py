@@ -3,6 +3,10 @@ import numpy as np
 import pandas as pd
 
 from model.utils import *
+
+from dataprocessing.info import *
+from dataprocessing.roadlevel import *
+from dataprocessing.vehicledetector import *
 #--------------------------------------------------------------------------------
 #the dataloader python file is a python class which can cath all the data in the 
 #csv file which we save our data
@@ -149,7 +153,7 @@ class RLdataLoader():
         return int(setting * 1024 * 1024 * 1024 / (109 * 8))
 
 class PredictLoader():
-    def __init__(self, road_name, now = None, mode = 'rl', data_dir = './data'):
+    def __init__(self, road_name, now = None, mode = 'rl', data_dir = './data', label_dir = './csv/label.csv'):
         #the predict dataloader is the class which grab the data from now
         #road_name is the road title we wants to predict
         self.road_name = road_name
@@ -158,7 +162,10 @@ class PredictLoader():
         #the mode is the type which data we will use
         self.mode = mode
         #the data_dir is the directory class grabnow store file
-        self.data_dir = self.data_dir
+        self.data_dir = data_dir
+        self.label_dir = label_dir
+        self.day_label = pd.read_csv(self.label_dir)
+
         #inherit by the brabnow class
         self.sub_title = ['roadlevel_value.xml.gz', 'roadlevel_value5.xml.gz', 'vd_value.xml.gz', 'vd_value5.xml.gz']
 
@@ -168,13 +175,13 @@ class PredictLoader():
     def build(self, road_name, mode):
         if mode == 'rl':
             batch_data = np.empty(108)
-            grabber = RLdata(self.data_dir + '/' + self.self.sub_title[0])
+            grabber = RLdata(self.data_dir + '/' + self.sub_title[0])
             value = grabber.grab()
-            grabber = RLdata(self.data_dir + '/' + self.self.sub_title[1])
+            grabber = RLdata(self.data_dir + '/' + self.sub_title[1])
             value5 = grabber.grab()
 
-            if now == None:
-                self.now = value[i][4]
+            if self.now == None:
+                self.now = value[0][4]
 
             for i in range(len(value)):
                 if road_name == value[i][0]:
@@ -192,7 +199,7 @@ class PredictLoader():
 
                     batch_data[102: 108] = self.dayFeature(self.now)
 
-                    return batch_data
+                    return np.expand_dims(batch_data, axis = 0)
         else:
             return
             #still working
@@ -209,9 +216,8 @@ class PredictLoader():
 
             return feature
         else:
-            #input list [hour, minute]
-            hour = int(input_time[0])
-            minute = int(input_time[1])
+            hour = int(input_time[3])
+            minute = int(input_time[4])
             feature = np.zeros(48)
             feature[2 * hour + int(minute / 30)] = 1
 
@@ -229,7 +235,7 @@ class PredictLoader():
             feature = np.zeros(6)
             label = -1
             for i in range(len(self.day_label)):
-                if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and elf.day_label.iloc[i, 2] == day:
+                if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and self.day_label.iloc[i, 2] == day:
                     label = self.day_label.iloc[i, 3]
 
                 if label > 0:
@@ -246,7 +252,7 @@ class PredictLoader():
             feature = np.zeros(6)
             label = -1
             for i in range(len(self.day_label)):
-                if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and elf.day_label.iloc[i, 2] == day:
+                if self.day_label.iloc[i, 0] == year and self.day_label.iloc[i, 1] == month and self.day_label.iloc[i, 2] == day:
                     label = self.day_label.iloc[i, 3]
 
                 if label > 0:

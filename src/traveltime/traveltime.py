@@ -40,7 +40,7 @@ class Ttime():
         self.timeReset()
         cumulated_time = 0
         for i in range(len(route)):
-            time_temp = self.model(route[i], self.now)
+            time_temp = self.model(route[i], self.time)
             cumulated_time += time_temp
             self.timeIter(time_temp)
 
@@ -84,13 +84,13 @@ class Ttime():
 
     def model(self, model_name, times):
         #the predict process of each model
-        loader = PredictLoader(model_name)
+        loader = PredictLoader(model_name, now = times)
         data = loader.data
 
-        model = SVRmodel(self.model_dir + '/' + model_name + '.pkl', now = times)
-        times = model.predict(data)
+        model = SVRmodel(self.model_dir + '/' + model_name + '.pkl')
+        spend_time = model.predict(data)
 
-        return times
+        return spend_time
 
     def showRoute(self, start, target):
         #return all the road intervl we need to go

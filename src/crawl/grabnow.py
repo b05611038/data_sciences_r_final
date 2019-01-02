@@ -1,5 +1,6 @@
 import os
 import wget
+import time
 import datetime
 
 from utils import *
@@ -20,7 +21,7 @@ class GrabNow():
         self.latest = self.latest[0] + self.latest[1]
 
         #the filename need to download
-        self.sub_title = ['roadlevel_value.xml.gz', 'roadlevel_value5.xml.gz', 'vd_value.xml.gz', 'vd_value5.xml.gz', 'roadlevel_info.xml.gz', 'vd_info.xml.gz']
+        self.sub_title = ['roadlevel_value.xml.gz', 'roadlevel_value5.xml.gz', 'vd_value.xml.gz', 'vd_value5.xml.gz']
 
         #folder setup for the application
         if not os.path.exists(self.save_dir):
@@ -41,7 +42,9 @@ class GrabNow():
     def grab(self):
         for i in range(len(self.sub_title)):
             download_url = self.url + self.sub_title[i]
-            wget.download(download_url, out = (self.save_dir + '/' + self.sub_title[i]))
+            wget.download(download_url)
+            wget.download(download_url, out = self.save_dir + '/' + self.sub_title[i])
+            print('\n\n' + self.sub_title[i] + ' loading done')
 
     def remove(self):
         file_list = os.listdir(self.save_dir)
