@@ -20,7 +20,7 @@ NTNU Technology Application and Human Resource Development, Jing-Chun Yuan
 ## Slide
 
 The slide we used in the final report in 2019/01/03 in National Taiwan University.
-[slide link(Google drive)](https://drive.google.com/open?id=1__Q59EmY8x_fgnyUowpCQo0v-b45ZNBe)
+[slide link(Google drive)](https://drive.google.com/open?id=18hKBW0ZxIkkSly7OOUdpRfnd3l29E8no)
 [backup link(Github)](https://github.com/b05611038/data_sciences_r_final/blob/master/final_slide.pdf)
 
 
